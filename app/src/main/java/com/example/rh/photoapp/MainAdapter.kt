@@ -10,37 +10,8 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.rh.photoapp.models.Photo
 
-/**
- *
- */
-/**
- *
- */
+
 class MainAdapter(var photos:List<Photo>, var clickListener : View.OnClickListener?) : RecyclerView.Adapter<MainAdapter.PhotoHolder>() {
-    override fun getItemCount(): Int {
-        return photos.size
-    }
-
-    override fun onBindViewHolder(holder: PhotoHolder?, position: Int) {
-        val photo = photos[position]
-        holder?.tags?.text = photo.tags
-        holder?.likes?.text = photo.likes.toString()
-        holder?.favorites?.text = photo.favorites.toString()
-        if (photo.previewURL.isNotEmpty()) {
-            Glide.with(holder?.tags?.context)
-                .load(photo.previewURL)
-                .into(holder?.photo_item)
-        }
-
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PhotoHolder {
-        return PhotoHolder(LayoutInflater.from(parent?.context).inflate(R.layout.photo_item, parent, false))
-    }
-
-    fun getPhoto(adapterPosition: Int) : Photo {
-        return photos[adapterPosition]
-    }
 
     inner class PhotoHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tags : TextView
@@ -59,5 +30,34 @@ class MainAdapter(var photos:List<Photo>, var clickListener : View.OnClickListen
             photo_item = itemView.findViewById(R.id.photo_item) as ImageView
         }
     }
+
+    override fun getItemCount(): Int {
+        return photos.size
+    }
+
+    override fun onBindViewHolder(p0: PhotoHolder, position: Int) {
+        var holder = p0
+        val photo = photos[position]
+        holder?.tags?.text = photo.tags
+        holder?.likes?.text = photo.likes.toString()
+        holder?.favorites?.text = photo.favorites.toString()
+        if (photo.previewURL.isNotEmpty()) {
+            Glide.with(holder?.tags?.context)
+                .load(photo.previewURL)
+                .into(holder?.photo_item)
+        }
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):PhotoHolder {
+
+        return PhotoHolder(LayoutInflater.from(parent?.context).inflate(R.layout.photo_item, parent, false))
+    }
+
+    fun getPhoto(adapterPosition: Int) : Photo {
+        return photos[adapterPosition]
+    }
+
+
 
 }
